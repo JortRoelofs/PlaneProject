@@ -3,38 +3,43 @@ class Wing:
 
     X = []
     Y = []
+    Z = []
     Cl = []
     Cd = []
     Cm = []
 
-    def __init__(self, x, y, cl, cd, cm):
+    def __init__(self, x, y, z, cl, cd, cm):
         self.X = x
         self.Y = y
+        self.Z = z
         self.Cl = cl
         self.Cd = cd
         self.Cm = cm
 
-    def getYCoord(self, xcoord):
-        return self.Y[self.getXCoordIndex(xcoord)]
+    def getXCoord(self, ycoord):
+        return self.X[self.getYCoordIndex(ycoord)]
 
-    def getCl(self, xcoord):
-        return self.Cl[self.getXCoordIndex(xcoord)]
+    def getZCoord(self, ycoord):
+        return self.Z[self.getYCoordIndex(ycoord)]
 
-    def getCd(self, xcoord):
-        return self.Cd[self.getXCoordIndex(xcoord)]
+    def getCl(self, ycoord):
+        return self.Cl[self.getYCoordIndex(ycoord)]
 
-    def getCm(self, xcoord):
-        return self.Cm[self.getXCoordIndex(xcoord)]
+    def getCd(self, ycoord):
+        return self.Cd[self.getYCoordIndex(ycoord)]
 
-    def getXCoordIndex(self, xcoord):
-        if xcoord <= self.x[0]:
+    def getCm(self, ycoord):
+        return self.Cm[self.getYCoordIndex(ycoord)]
+
+    def getYCoordIndex(self, ycoord):
+        if ycoord <= self.Y[0]:
             return 0
-        elif xcoord >= self.x[-1]:
-            return len(self.x) - 1
+        elif ycoord >= self.Y[-1]:
+            return len(self.Y) - 1
         else:
-            for i in range(1, len(self.x)):
-                if xcoord <= self.x[i]:
-                    if xcoord <= (self.x[i] + self.x[i - 1]) / 2:
+            for i in range(1, len(self.Y)):
+                if ycoord <= self.Y[i]:
+                    if ycoord <= (self.Y[i] + self.Y[i - 1]) / 2:
                         return i - 1
                     else:
                         return i
