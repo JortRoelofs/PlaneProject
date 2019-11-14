@@ -1,16 +1,15 @@
-
 class Wing:
 
-    v = 0
+    v = 0  # value
 
-    X = 0
-    Y = 0
-    Z = 0
-    Cp = 0
-    Cl = 0
-    Cd = 0
-    CmGeom = 0
-    CmQuarter = 0
+    X = 0  # function
+    Y = 0  # function
+    Z = 0  # function, is actualy 0
+    Cp = 0  # function
+    Cl = 0  # function
+    Cd = 0  # function
+    CmGeom = 0  # function
+    CmQuarter = 0  # function
 
     def __init__(self, v, x, y, z, cp, cl, cd, cmgeom, cmquarter):
         self.v = v
