@@ -27,4 +27,4 @@ class Wing:
         return 0.5 * 1.225 * self.v ** 2 * self.Cl(y) * self.X(y)
 
     def drag(self, y):
-        return 0.5 * 1.225 * self.v ** 2 * self.Cl(y) * self.X(y)
+        return 0.5 * 1.225 * self.v ** 2 * self.Cd(y) * self.X(y)
