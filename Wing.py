@@ -8,7 +8,8 @@ class Wing:
     v = 0  # [m/s]
     rho = 0  # [kg/m^3]
 
-    eng_pos = 0  # [m]
+    eng_y = 0  # [m]
+    eng_z = 0  # [m]
     eng_weight = 0  # [N]
 
     X = None  # function

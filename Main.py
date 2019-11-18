@@ -57,7 +57,8 @@ class DataCalculator:
 aoa = int(input("Enter angle of attack. Choose 0 or 10 [deg]:"))
 v = int(input("Enter velocity [m/s]:"))
 rho = float(input("Enter density [kg/m^3]:"))
-y_eng = float(input("Enter engine position, distance from center of wing [m]:"))
+z_eng = float(input("Enter engine z-position, height between engine and wing [m]"))
+y_eng = float(input("Enter engine y-position, distance from center of wing [m]:"))
 w_eng = float(input("Enter engine weight [N]:"))
 
 
