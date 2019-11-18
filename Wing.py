@@ -1,29 +1,33 @@
+import numpy as np
+
+stdrange = np.arange(0, 14.62, 0.05)
+
+
 class Wing:
 
-    v = 0  # value
+    v = 0  # [m/s]
+    rho = 0  # [kg/m^3]
 
-    X = 0  # function
-    Y = 0  # function
-    Z = 0  # function, is actualy 0
-    Cp = 0  # function
-    Cl = 0  # function
-    Cd = 0  # function
-    CmGeom = 0  # function
-    CmQuarter = 0  # function
+    eng_pos = 0  # [m]
+    eng_weight = 0  # [N]
 
-    def __init__(self, v, x, y, z, cp, cl, cd, cmgeom, cmquarter):
+    X = None  # function
+    Y = None  # function
+    Z = None  # function
+    Cp = None  # function
+    Cl = None  # function
+    Cd = None  # function
+    CmGeom = None  # function
+    CmQuarter = None  # function
+
+    def __init__(self, v, rho, engine_pos, engine_weight):
         self.v = v
-        self.X = x
-        self.Y = y
-        self.Z = z
-        self.Cp = cp
-        self.Cl = cl
-        self.Cd = cd
-        self.CmGeom = cmgeom
-        self.CmQuarter = cmquarter
+        self.rho = rho
+        self.eng_pos = engine_pos
+        self.eng_weight = engine_weight
 
     def lift(self, y):
-        return 0.5 * 1.225 * self.v ** 2 * self.Cl(y) * self.X(y)
+        return 0.5 * self.rho * self.v ** 2 * self.Cl(y) * self.X(y)
 
     def drag(self, y):
-        return 0.5 * 1.225 * self.v ** 2 * self.Cd(y) * self.X(y)
+        return 0.5 * self.rho * self.v ** 2 * self.Cd(y) * self.X(y)
