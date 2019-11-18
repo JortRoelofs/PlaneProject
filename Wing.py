@@ -1,6 +1,7 @@
 import numpy as np
 
-stdrange = np.arange(0, 14.62, 0.05)
+wing_max = 14.62
+stdrange = np.arange(0, wing_max, 0.05)
 
 
 class Wing:

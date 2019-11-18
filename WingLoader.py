@@ -18,4 +18,3 @@ def loadWing(a, v, rho, eng_y, eng_z, eng_thrust, eng_weight):
     wing.CmGeom = interpolate.interp1d(y, cmgeom, kind='cubic', fill_value="extrapolate")
     wing.CmQuarter = interpolate.interp1d(y, cmquarter, kind='cubic', fill_value="extrapolate")
     return wing
-

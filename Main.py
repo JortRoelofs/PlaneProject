@@ -43,12 +43,15 @@ class DataCalculator:
 
     def plot(self):
         plt.subplot(2, 2, 1)
+        plt.title("Shear Diagram")
         plt.plot(self.shearX, self.shearY)
 
         plt.subplot(2, 2, 2)
+        plt.title("Moment Diagram")
         plt.plot(self.momentX, self.momentY)
 
         plt.subplot(2, 2, 3)
+        plt.title("Torque Diagram")
         plt.plot(self.torqueX, self.torqueY)
 
         plt.show()
@@ -57,10 +60,10 @@ class DataCalculator:
 aoa = int(input("Enter angle of attack. Choose 0 or 10 [deg]:"))
 v = int(input("Enter velocity [m/s]:"))
 rho = float(input("Enter density [kg/m^3]:"))
-z_eng = float(input("Enter engine z-position, height between engine and wing [m]"))
-y_eng = float(input("Enter engine y-position, distance from center of wing [m]:"))
-t_eng = float(input("Enter engine thrust [N]:"))
-w_eng = float(input("Enter engine weight [N]:"))
+y_eng = 5.13
+z_eng = 1.06492
+t_eng = 64.5e3
+w_eng = 11566
 
 
 main = DataCalculator(WingLoader.loadWing(aoa, v, rho, y_eng, z_eng, t_eng, w_eng))

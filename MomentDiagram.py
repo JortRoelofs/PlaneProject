@@ -13,7 +13,7 @@ def calcMomentValues(wing):
 
 # noinspection PyTupleAssignmentBalance
 def moment(wing, y):
-    val, err = integrate.quad(f, y, 14.62, wing)
+    val, err = integrate.quad(f, y, Wing.wing_max, wing)
     if y <= wing.eng_y:
         return val - wing.eng_weight * (wing.eng_y - y)
     else:

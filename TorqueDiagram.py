@@ -12,7 +12,7 @@ def calcTorqueValues(wing):
 
 # noinspection PyTupleAssignmentBalance
 def torque(wing, y):
-    val, err = integrate.quad(f, y, 14.62, wing)
+    val, err = integrate.quad(f, y, Wing.wing_max, wing)
     if y <= wing.eng_y:
         return val + wing.eng_thrust * wing.eng_z
     else:
