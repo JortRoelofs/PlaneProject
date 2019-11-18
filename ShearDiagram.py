@@ -14,7 +14,7 @@ def calcShearValues(wing):
 # noinspection PyTupleAssignmentBalance
 def shear(wing, y):
     val, err = integrate.quad(wing.lift, y, 14.62)
-    if y <= wing.eng_pos:
+    if y <= wing.eng_y:
         return val - wing.eng_weight
     else:
         return val
