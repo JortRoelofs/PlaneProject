@@ -1,6 +1,7 @@
 import threading
 
 import WingLoader
+import MomentDiagram
 import ShearDiagram
 
 import matplotlib.pyplot as plt
@@ -34,7 +35,7 @@ class DataCalculator:
         self.shearX, self.shearY = ShearDiagram.calcShearValues(self.wing)
 
     def moment(self):
-        print("TODO")
+        self.momentX, self.momentY = MomentDiagram.calcMomentValues(self.wing)
 
     def torque(self):
         print("TODO")
@@ -43,13 +44,11 @@ class DataCalculator:
         plt.subplot(2, 2, 1)
         plt.plot(self.shearX, self.shearY)
 
-        #plt.subplot(2, 2, 2)
-        #plt.plot(self.momentX, self.momentY)
+        plt.subplot(2, 2, 2)
+        plt.plot(self.momentX, self.momentY)
 
         #plt.subplot(2, 2, 3)
         #plt.plot(self.torqueX, self.torqueY)
-
-        #plt.sub
 
         plt.show()
 
