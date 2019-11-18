@@ -3,6 +3,7 @@ import threading
 import WingLoader
 import MomentDiagram
 import ShearDiagram
+import TorqueDiagram
 
 import matplotlib.pyplot as plt
 
@@ -38,7 +39,7 @@ class DataCalculator:
         self.momentX, self.momentY = MomentDiagram.calcMomentValues(self.wing)
 
     def torque(self):
-        print("TODO")
+        self.torqueX, self.torqueY = TorqueDiagram.calcTorqueValues(self.wing)
 
     def plot(self):
         plt.subplot(2, 2, 1)
@@ -47,8 +48,8 @@ class DataCalculator:
         plt.subplot(2, 2, 2)
         plt.plot(self.momentX, self.momentY)
 
-        #plt.subplot(2, 2, 3)
-        #plt.plot(self.torqueX, self.torqueY)
+        plt.subplot(2, 2, 3)
+        plt.plot(self.torqueX, self.torqueY)
 
         plt.show()
 
@@ -58,9 +59,10 @@ v = int(input("Enter velocity [m/s]:"))
 rho = float(input("Enter density [kg/m^3]:"))
 z_eng = float(input("Enter engine z-position, height between engine and wing [m]"))
 y_eng = float(input("Enter engine y-position, distance from center of wing [m]:"))
+t_eng = float(input("Enter engine thrust [N]:"))
 w_eng = float(input("Enter engine weight [N]:"))
 
 
-main = DataCalculator(WingLoader.loadWing(aoa, v, rho, y_eng, w_eng))
+main = DataCalculator(WingLoader.loadWing(aoa, v, rho, y_eng, z_eng, t_eng, w_eng))
 main.run()
 main.plot()

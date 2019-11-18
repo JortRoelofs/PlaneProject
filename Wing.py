@@ -10,6 +10,7 @@ class Wing:
 
     eng_y = 0  # [m]
     eng_z = 0  # [m]
+    eng_thrust = 0  # [m]
     eng_weight = 0  # [N]
 
     X = None  # function
@@ -21,11 +22,13 @@ class Wing:
     CmGeom = None  # function
     CmQuarter = None  # function
 
-    def __init__(self, v, rho, engine_pos, engine_weight):
+    def __init__(self, v, rho, eng_y, eng_z, eng_thrust, eng_weight):
         self.v = v
         self.rho = rho
-        self.eng_pos = engine_pos
-        self.eng_weight = engine_weight
+        self.eng_y = eng_y
+        self.eng_z = eng_z
+        self.eng_thrust = eng_thrust
+        self.eng_weight = eng_weight
 
     def lift(self, y):
         return 0.5 * self.rho * self.v ** 2 * self.Cl(y) * self.X(y)

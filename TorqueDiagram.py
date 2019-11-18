@@ -1,24 +1,23 @@
 from scipy import integrate
 import Wing
 
-
-def calcMomentValues(wing):
+def calcTorqueValues(wing):
     ylst = []
     index = 0
     for y in Wing.stdrange:
-        ylst.append(moment(wing, y))
+        ylst.append(torque(wing, y))
         index += 1
     return Wing.stdrange, ylst
 
 
 # noinspection PyTupleAssignmentBalance
-def moment(wing, y):
+def torque(wing, y):
     val, err = integrate.quad(f, y, 14.62, wing)
     if y <= wing.eng_y:
-        return val - wing.eng_weight * (wing.eng_y - y)
+        return val + wing.eng_thrust * wing.eng_z
     else:
         return val
 
 
 def f(y, wing):
-    return wing.lift(y) * y
+    return wing.lift(y) * (wing.Cp(y) - 0.4 * wing.X(y))
