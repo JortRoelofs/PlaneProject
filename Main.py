@@ -1,4 +1,5 @@
 import multiprocessing
+import numpy as np
 import scipy as sp
 from scipy import interpolate
 
@@ -68,39 +69,26 @@ class DataCalculator:
         print("Maximum deflection: {0:.2f} [%]".format(self.deflection[-1] / (Wing.wing_max * 2) * 100))
 
     def plot(self):
-        columns = 4
-        rows = 2
-        plt.subplot(rows, columns, 1)
-        plt.title("Lift Diagram")
-        plt.plot(Wing.stdrange, self.lift)
-
-        plt.subplot(rows, columns, 2)
-        plt.title("Shear Diagram")
-        plt.plot(Wing.stdrange, self.shear)
-
-        plt.subplot(rows, columns, 3)
-        plt.title("Moment Diagram")
-        plt.plot(Wing.stdrange, self.moment)
-
-        plt.subplot(rows, columns, 4)
-        plt.title("Torsion Diagram")
-        plt.plot(Wing.stdrange, self.torsion)
-
-        plt.subplot(rows, columns, 5)
-        plt.title("X Moment of Inertia Diagram")
-        plt.plot(Wing.stdrange, self.moi_x)
-
-        plt.subplot(rows, columns, 6)
-        plt.title("Polar Moment of Inertia Diagram")
-        plt.plot(Wing.stdrange, self.moi_polar)
-
-        plt.subplot(rows, columns, 7)
-        plt.plot(Wing.stdrange, self.twist)
-
-        plt.subplot(rows, columns, 8)
-        plt.plot(Wing.stdrange, self.deflection)
-
+        plotDiagram(Wing.stdrange, self.lift, "Lift Distribution", "Wing span [m]", "Lift [N]")
+        plotDiagram(Wing.stdrange, self.shear, "Shear Force", "Wing span [m]", "Shear force [N]")
+        plotDiagram(Wing.stdrange, self.moment, "Bending Moment", "Wing span [m]", "Bending moment [Nm]")
+        plotDiagram(Wing.stdrange, self.torsion, "Torsion", "Wing span [m]", "Torsion [Nm]")
+        plotDiagram(Wing.stdrange, self.moi_x, "Moment of Inertia around X-axis", "Wing span[m]", "I$_{xx}$ [m$^4$]")
+        plotDiagram(Wing.stdrange, self.moi_polar, "Polar Moment of Inertia", "Wing span [m]", "J [m$^4$]")
+        plotDiagram(Wing.stdrange, np.degrees(self.twist), "Wing Twist", "Wing span [m]", "Angle of twist [$^\\deg$]")
+        plotDiagram(Wing.stdrange, self.deflection, "Wing Deflection", "Wing span [m]", "Deflection [m]")
         plt.show()
+
+
+def plotDiagram(x, y, title, xlabel, ylabel):
+    plt.figure()
+    plt.title(title)
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
+    plt.grid(b=True, which='major', color='#f0f0f0', linestyle='-')
+    plt.ticklabel_format(axis='y', style='sci', scilimits=(-2, 2))
+    plt.axis([min(x), max(x), min(y), max(y)])
+    plt.plot(x, y)
 
 
 if __name__ == '__main__':

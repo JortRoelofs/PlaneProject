@@ -44,13 +44,13 @@ class Wing:
         self.rho = rho
 
     def cl(self, y):
-        return self.cl0(y) + self.interp_cons * (self.cl0(y) - self.cl0(y))
+        return self.cl0(y) + self.interp_cons * (self.cl10(y) - self.cl0(y))
 
     def cd(self, y):
-        return self.cd0(y) + self.interp_cons * (self.cd0(y) - self.cd0(y))
+        return self.cd0(y) + self.interp_cons * (self.cd10(y) - self.cd0(y))
 
     def cm(self, y):
-        return self.cm0(y) + self.interp_cons * (self.cm0(y) - self.cm0(y))
+        return self.cm0(y) + self.interp_cons * (self.cm10(y) - self.cm0(y))
 
     def normal(self, y):
         return sp.cos(self.aoa) * self.lift(y) + sp.sin(self.aoa) * self.drag(y)
@@ -80,19 +80,19 @@ class Wing:
 
     def nstringers(self, y):
         if y <= wing_max / 3:
-            return 8
+            return 18
         elif y <= wing_max * 2 / 3:
-            return 6
+            return 12
         else:
             return 4
 
     def thickness(self, y):
         if y <= wing_max / 3:
-            return 0.004
+            return 0.016
         elif y <= wing_max * 2 / 3:
-            return 0.003
+            return 0.012
         else:
-            return 0.002
+            return 0.004
 
 
 class Material:

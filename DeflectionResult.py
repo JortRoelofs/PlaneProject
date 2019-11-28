@@ -46,7 +46,7 @@ class DeflectionCalculator:
         return self.deflection(y)
 
     def deflection(self, y):
-        return integrate.quad(self.rotationFunc, 0, y)[0]
+        return integrate.quad(self.rotationFunc, 0, y, epsabs=1.49e-06)[0]
 
 
 class TwistCalculator:
