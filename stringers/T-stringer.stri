@@ -1,0 +1,6 @@
+name:       T-stringer
+area:       t * (w + h - t)
+centroid_x: 0
+centroid_z: (h ** 2 + w * t - t ** 2) / (2 * (h + w - t))
+moi_xx:     (t * h ** 3 + w * t ** 3 - t ** 4) / 3 - a * z ** 2
+moi_zz:     (h * t ** 3 - t ** 4 + t * b ** 3) / 12

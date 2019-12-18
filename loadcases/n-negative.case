@@ -1,0 +1,8 @@
+wing:               TUD-A05
+step:               0.1
+load_factor:        -1.875
+velocity:           228.5
+air_density:        1.225
+aircraft_weight:    256793.3
+limit_deflection:   15
+limit_twist:        10

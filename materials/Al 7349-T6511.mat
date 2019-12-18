@@ -1,0 +1,6 @@
+name:           Al 7349-T6511
+e-modulus:      74.6e9
+shear_modulus:  29.8e9
+yield_stress:   675e6
+poisson-factor: 0.343
+density:        2.85e3

@@ -1,0 +1,6 @@
+name:       I-stringer
+area:       2 * w * t + h * t
+centroid_x: w / 2
+centroid_z: h / 2
+moi_xx:     (w * h ** 3 - (w - t) * (h - 2t) ** 3) / 12
+moi_zz:     ((h - 2 * t) * t ** 3 + 2 * t * w ** 3) / 12

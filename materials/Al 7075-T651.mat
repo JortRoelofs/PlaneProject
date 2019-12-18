@@ -1,0 +1,6 @@
+name:           Al 7075-T651
+e-modulus:      74.6e9
+shear_modulus:  28.4e9
+yield_stress:   496e6
+poisson-factor: 0.343
+density:        2.81e3

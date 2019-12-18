@@ -1,0 +1,11 @@
+name:           TUD-A05
+wing_box:       TUD-A05
+surface_area:   29.29
+engine: {
+    position:   -0.6, 5.13, 1.06492
+    thrust:     64.5e3
+    weight:     11566
+}
+fuel_tank: {
+    range: 6.47, 14.5
+}
