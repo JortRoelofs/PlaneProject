@@ -101,8 +101,8 @@ if __name__ == '__main__':
     input_load_case = parse.load_load_case(input_load_cases_str)
 
     main = DataCalculator(input_load_case)
-    #main.analyze_deflection()
-    #main.analyze_twist()
+    main.analyze_deflection()
+    main.analyze_twist()
     main.analyze_stress()
     print("Weight is {0:.3e} [N]".format(analyze.ShearCalculator(input_load_case).calc_weight_wing_box()))
     main.show_plots()

@@ -1,0 +1,89 @@
+name:       TUD-A05
+range:      0, 14.65
+width:      2.1 - 0.1 * y
+height:     0.6 - 0.029 * y
+material:   Al 7349-T6511
+section: {
+    range:              0.0, 4.88
+    spar_thickness:     5e-3, 5e-3
+    panel_thickness:    15e-3, 15e-3
+    corner: {
+        stringer_width:     0.1
+        stringer_height:    0.1
+        stringer_thickness: 0.005
+    }
+    stringer_set: {
+        name:               L-stringer
+        amount:             3
+        stringer_width:     0.06
+        stringer_height:    0.06
+        stringer_thickness: 0.003
+        range:              0.25, 0.75
+        surface:            bottom
+    }
+    stringer_set: {
+        name:               L-stringer
+        amount:             5
+        stringer_width:     0.06
+        stringer_height:    0.06
+        stringer_thickness: 0.003
+        range:              0.13, 0.87
+        surface:            top
+    }
+}
+section: {
+    range:              4.88, 9.76
+    spar_thickness:     2e-3, 2.5e-3
+    panel_thickness:    10e-3, 10e-3
+    corner: {
+        stringer_width:     0.1
+        stringer_height:    0.1
+        stringer_thickness: 0.005
+    }
+    stringer_set: {
+        name:               L-stringer
+        amount:             3
+        stringer_width:     0.06
+        stringer_height:    0.06
+        stringer_thickness: 0.003
+        range:              0.25, 0.75
+        surface:            bottom
+    }
+    stringer_set: {
+        name:               L-stringer
+        amount:             5
+        stringer_width:     0.06
+        stringer_height:    0.06
+        stringer_thickness: 0.003
+        range:              0.17, 0.83
+        surface:            top
+    }
+}
+section: {
+    range:              9.76, 14.65
+    spar_thickness:     0.8e-3, 0.8e-3
+    panel_thickness:    6e-3, 6e-3
+    corner: {
+        stringer_width:     0.08
+        stringer_height:    0.08
+        stringer_thickness: 0.004
+    }
+    stringer_set: {
+        name:               L-stringer
+        amount:             3
+        stringer_width:     0.06
+        stringer_height:    0.06
+        stringer_thickness: 0.003
+        range:              0.25, 0.75
+        surface:            bottom
+    }
+    stringer_set: {
+        name:               L-stringer
+        amount:             4
+        stringer_width:     0.06
+        stringer_height:    0.06
+        stringer_thickness: 0.003
+        range:              0.2, 0.8
+        surface:            top
+    }
+}

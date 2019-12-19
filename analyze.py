@@ -74,7 +74,7 @@ class ShearCalculator:
         return -9.81 * self.wing_box.material.density * integrate.quad(self.wing_box.calc_material_area, y, self.wing_box.end_y, epsabs=1.49e-06)[0]
 
     def weight_wing(self, y):
-        return - 9.81 * 2.06 * 0.001 * self.wing_box.material.density * integrate.quad(self.wing_box.calc_material_area, y, self.wing_box.end_y)[0]
+        return - 9.81 * 2.06 * 0.001 * self.wing_box.material.density * integrate.quad(self.load_case.wing.chord, y, self.wing_box.end_y)[0]
 
     def engine(self, y):
         if y <= self.load_case.wing.engine.y:

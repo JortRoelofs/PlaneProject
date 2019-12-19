@@ -132,7 +132,10 @@ class WingBoxSection:
         self.stringer_sets = []
 
     def calc_material_area(self, width, height):
-        return width * (self.top_panel_t + self.bottom_panel_t) + height * (self.front_spar_t + self.back_spar_t)
+        a = width * (self.top_panel_t + self.bottom_panel_t) + height * (self.front_spar_t + self.back_spar_t)
+        for stringer_set in self.stringer_sets:
+            a += stringer_set.calc_area()
+        return a
 
     def calc_area_cross_sectional(self, width, height):
         return (width - self.front_spar_t - self.back_spar_t) * (height - self.top_panel_t - self.bottom_panel_t)
