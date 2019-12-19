@@ -49,6 +49,7 @@ class ShearCalculator:
 
     def __init__(self, load_case):
         self.load_case = load_case
+        self.wing_box = load_case.wing.wing_box
 
     def calc(self, size):
         pool = Pool(size)
@@ -59,28 +60,30 @@ class ShearCalculator:
         return interpolate.interp1d(self.load_case.range, results, kind='cubic', fill_value="extrapolate")
 
     def value(self, y):
-        return self.shear(y) + self.fuel(y) + self.weight(y) + self.engine(y)
+        return self.shear(y) + self.fuel(y) + self.weight_wing_box(y) + self.weight_wing(y)+ self.engine(y)
 
     def shear(self, y):
         func = lambda y2: self.load_case.wing.lift(y2, self.load_case.density, self.load_case.velocity)
-        return integrate.quad(func, y, self.load_case.wing.wing_box.end_y)[0]
+        return integrate.quad(func, y, self.wing_box.end_y)[0]
 
     def fuel(self, y):
         return - integrate.quad(self.load_case.wing.fuel_tank.fuel_cross_section, y,
-                                self.load_case.wing.wing_box.end_y, limit=100, epsrel=1.49e-06)[0] * structure.FuelTank.rho_fuel * 9.81
+                                self.wing_box.end_y, limit=100, epsrel=1.49e-06)[0] * structure.FuelTank.rho_fuel * 9.81
 
-    def weight(self, y):
-        wing_box = self.load_case.wing.wing_box
-        val = integrate.quad(wing_box.calc_material_area, y, wing_box.end_y, epsabs=1.49e-06)[0]
-        int2 = integrate.quad(self.load_case.wing.chord, y, wing_box.end_y)[0]
-        val2 = 2.06 * 0.001 * int2
-        return - 9.81 * wing_box.material.density * (val + val2)
+    def weight_wing_box(self, y):
+        return -9.81 * self.wing_box.material.density * integrate.quad(self.wing_box.calc_material_area, y, self.wing_box.end_y, epsabs=1.49e-06)[0]
+
+    def weight_wing(self, y):
+        return - 9.81 * 2.06 * 0.001 * self.wing_box.material.density * integrate.quad(self.wing_box.calc_material_area, y, self.wing_box.end_y)[0]
 
     def engine(self, y):
         if y <= self.load_case.wing.engine.y:
             return - self.load_case.wing.engine.weight
         else:
             return 0
+
+    def calc_weight_wing_box(self):
+        return - self.weight_wing_box(0)
 
     def print_result(self, results):
         abs_min = abs(min(results))
@@ -298,14 +301,17 @@ class WebBucklingCalculator:
         pool.close()
         pool.join()
         min_margin = {}
+        min_values = []
         for section in self.wing_box.sections:
             min_margin[section] = [sys.float_info.max, False]
         for result in results:
             if result is not None:
+                min_values.append(result[1])
                 if abs(result[1]) < min_margin[result[0]][0]:
                     min_margin[result[0]][0] = abs(result[1])
                     min_margin[result[0]][1] = result[2]
         self.print_result(min_margin)
+        return interpolate.interp1d(self.load_case.range, min_values, kind="cubic", fill_value="extrapolate")
 
     def value(self, y):
         section = self.wing_box.get_active_section(y)
@@ -381,15 +387,19 @@ class SkinBucklingCalculator:
         pool.close()
         pool.join()
         min_margin = {}
+        min_values = [sys.float_info.max]*len(self.load_case.range)
         for section in self.wing_box.sections:
             min_margin[section] = [sys.float_info.max, None]
         for results_set in results:
-            for result in results_set:
-                if result is not None:
-                    if 0 < result[1] < min_margin[result[0]][0]:
-                        min_margin[result[0]][0] = result[1]
-                        min_margin[result[0]][1] = result[2]
+            for i in range(len(results_set)):
+                if results_set[i] is not None:
+                    if 0 < results_set[i][1] < min_values[i]:
+                        min_values[i] = results_set[i][1]
+                    if 0 < results_set[i][1] < min_margin[results_set[i][0]][0]:
+                        min_margin[results_set[i][0]][0] = results_set[i][1]
+                        min_margin[results_set[i][0]][1] = results_set[i][2]
         self.print_result(min_margin)
+        return interpolate.interp1d(self.load_case.range, min_values, kind="cubic", fill_value="extrapolate")
 
     def value(self, y, plate):
         if plate.start_y <= y <= plate.end_y:
@@ -463,15 +473,19 @@ class ColumnBucklingCalculator:
         pool.close()
         pool.join()
         min_margin = {}
+        min_values = [sys.float_info.max]*len(self.load_case.range)
         for section in self.wing_box.sections:
             min_margin[section] = [sys.float_info.max, None]
         for results_set in results:
-            for result in results_set:
-                if result is not None:
-                    if 0 < result[1] < min_margin[result[0]][0]:
-                        min_margin[result[0]][0] = result[1]
-                        min_margin[result[0]][1] = result[2]
+            for i in range(len(results_set)):
+                if results_set[i] is not None:
+                    if 0 < results_set[i][1] < min_values[i]:
+                        min_values[i] = results_set[i][1]
+                    if 0 < results_set[i][1] < min_margin[results_set[i][0]][0]:
+                        min_margin[results_set[i][0]][0] = results_set[i][1]
+                        min_margin[results_set[i][0]][1] = results_set[i][2]
         self.print_result(min_margin)
+        return interpolate.interp1d(self.load_case.range, min_values, kind="cubic", fill_value="extrapolate")
 
     def value(self, y, section, stringer_set):
         if section.start_y <= y <= section.end_y:

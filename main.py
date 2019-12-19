@@ -28,7 +28,7 @@ class DataCalculator:
 
         self.top_panel_stress = None
         self.bottom_panel_stress = None
-        self.web_buckling = None
+        self.shear_buckling = None
         self.skin_buckling = None
         self.column_buckling = None
 
@@ -67,16 +67,19 @@ class DataCalculator:
             self.torsion = analyze.TorsionCalculator(self.load_case).calc(self.poolsize)
         self.top_panel_stress = analyze.TopPanelStressCalculator(self.load_case, self.moment).calc(self.poolsize)
         self.bottom_panel_stress = analyze.BottomPanelStressCalculator(self.load_case, self.moment).calc(self.poolsize)
-        self.web_buckling = analyze.WebBucklingCalculator(self.load_case, self.shear, self.torsion).calc(self.poolsize)
+        self.shear_buckling = analyze.WebBucklingCalculator(self.load_case, self.shear, self.torsion).calc(self.poolsize)
         self.skin_buckling = analyze.SkinBucklingCalculator(self.load_case, self.top_panel_stress, self.bottom_panel_stress).calc(self.poolsize)
         self.column_buckling = analyze.ColumnBucklingCalculator(self.load_case, self.moment).calc(self.poolsize)
-
+        plt.hlines(1, min(self.load_case.range), max(self.load_case.range))
+        plot_diagram(self.load_case.range, self.shear_buckling, "Margin of safety for shear buckling", "Wing span [m]", "Margin of safety [-]", hline=1, axis=[min(self.load_case.range), max(self.load_case.range), 0, 10])
+        plot_diagram(self.load_case.range, self.skin_buckling, "Margin of safety for skin buckling", "Wing span [m]", "Margin of safety [-]", hline=1, axis=[min(self.load_case.range), max(self.load_case.range), 0, 10])
+        plot_diagram(self.load_case.range, self.column_buckling, "Margin of safety for column buckling", "Wing span [m]", "Margin of safety[-]", hline=1, axis=[min(self.load_case.range), max(self.load_case.range), 0, 10])
 
     def show_plots(self):
         plt.show()
 
 
-def plot_diagram(x, y_function, title, xlabel, ylabel):
+def plot_diagram(x, y_function, title, xlabel, ylabel, **kwargs):
     plt.figure()
     plt.title(title)
     plt.xlabel(xlabel)
@@ -86,7 +89,10 @@ def plot_diagram(x, y_function, title, xlabel, ylabel):
     y = []
     for i in x:
         y.append(y_function(i))
-    plt.axis([min(x), max(x), min(y), max(y)])
+    axis = kwargs.get("axis", [min(x), max(x), min(y), max(y)])
+    if kwargs.__contains__("hline"):
+        plt.hlines(kwargs.get("hline"), axis[0], axis[1])
+    plt.axis(axis)
     plt.plot(x, y_function(x))
 
 
@@ -98,4 +104,5 @@ if __name__ == '__main__':
     main.analyze_deflection()
     main.analyze_twist()
     main.analyze_stress()
+    print("Weight is {0:.3e} [N]".format(analyze.ShearCalculator(input_load_case).calc_weight_wing_box()))
     #main.show_plots()
