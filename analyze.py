@@ -306,7 +306,7 @@ class WebBucklingCalculator:
             min_margin[section] = [sys.float_info.max, False]
         for result in results:
             if result is not None:
-                min_values.append(result[1])
+                min_values.append(abs(result[1]))
                 if abs(result[1]) < min_margin[result[0]][0]:
                     min_margin[result[0]][0] = abs(result[1])
                     min_margin[result[0]][1] = result[2]
